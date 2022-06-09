@@ -34,18 +34,32 @@ struct ListItemView: View {
     }
 }
 
+enum Action: String{
+    case Connect, Disconnect
+}
+
 struct ContentView: View {
-    @ObservedObject var bleDevice: BlueToothManger = BlueToothManger()
+    @StateObject var bleDevice: BlueToothManger = BlueToothManger()
+    func changeConnect(ble: BlueToothManger, peripheral: CBPeripheral) -> Void {
+        switch peripheral.state {
+        case .connected:
+            ble.centralManager?.cancelPeripheralConnection(peripheral)
+        case .disconnected:
+            ble.connect(peripheral: peripheral)
+        @unknown default:
+            return
+        }
+    }
     var body: some View {
         VStack {
             List (bleDevice.Peripherals, id: \.identifier) {item in
-                ListItemView(item: item, delegate: bleDevice)
+                CardView(peripheral: item, action: {changeConnect(ble: bleDevice, peripheral: item)})//连接action
+                //ListItemView(item: item, delegate: bleDevice)
+            }
+            Button("DisConnect") {
+                bleDevice.centralManager?.cancelPeripheralConnection(bleDevice.currentPeripheral!)//断开连接
             }
         }
-        Button("print") {
-            bleDevice.centralManager?.cancelPeripheralConnection(bleDevice.currentPeripheral!)
-        }
-        
     }
 }
 

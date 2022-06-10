@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreBluetooth
 
+
 struct ListItemView: View {
     let peripheral: CBPeripheral
     let centralManger: CBCentralManager
@@ -56,15 +57,9 @@ struct ContentView: View {
                 CardView(peripheral: item, action: {changeConnect(ble: bleDevice, peripheral: item)})//连接action
                 //ListItemView(item: item, delegate: bleDevice)
             }
-            Button("DisConnect") {
-                bleDevice.centralManager?.cancelPeripheralConnection(bleDevice.currentPeripheral!)//断开连接
+            Button("search") {
+                bleDevice.centralManager?.scanForPeripherals(withServices: nil)
             }
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }

@@ -33,11 +33,12 @@ struct CardView:View {
     }
     func changeState() {
         action()
-        guard state != "disconnect" else {
+        if peripheral.state == .connected {
+            print(peripheral.state)
+            state = "disconnect"
+        } else {
             state = "connect"
-            return
         }
-        state = "disconnect"
     }
 
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		422955BA285784320018033C /* Printer in Frameworks */ = {isa = PBXBuildFile; productRef = 422955B9285784320018033C /* Printer */; };
 		89058AD428504DB200CCB8BC /* nexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89058AD328504DB200CCB8BC /* nexApp.swift */; };
 		89058AD628504DB200CCB8BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89058AD528504DB200CCB8BC /* ContentView.swift */; };
 		89058AD828504DB300CCB8BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89058AD728504DB300CCB8BC /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				422955BA285784320018033C /* Printer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +114,7 @@
 			);
 			name = nex;
 			packageProductDependencies = (
+				422955B9285784320018033C /* Printer */,
 			);
 			productName = nex;
 			productReference = 89058AD028504DB200CCB8BC /* nex.app */;
@@ -142,6 +145,7 @@
 			);
 			mainGroup = 89058AC728504DB200CCB8BC;
 			packageReferences = (
+				422955B8285784320018033C /* XCRemoteSwiftPackageReference "Printer" */,
 			);
 			productRefGroup = 89058AD128504DB200CCB8BC /* Products */;
 			projectDirPath = "";
@@ -379,6 +383,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		422955B8285784320018033C /* XCRemoteSwiftPackageReference "Printer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://hub.fastgit.xyz/KevinGong2013/Printer";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		422955B9285784320018033C /* Printer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 422955B8285784320018033C /* XCRemoteSwiftPackageReference "Printer" */;
+			productName = Printer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 89058AC828504DB200CCB8BC /* Project object */;
 }

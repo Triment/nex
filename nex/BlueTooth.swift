@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreBluetooth
-
+import Printer
 
 //蓝牙服务uuid
 
@@ -32,6 +32,7 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     @Published var Peripherals: [CBPeripheral] = []//centeralManger发现的外设,这个对象可以发现外设上的服务和特性，服务本身可以包含其他服务的引用
     @Published var currentPeripheral: CBPeripheral?
     @Published var currentBlueToothState: String?
+    @Published var currentCharacteristic: CBCharacteristic!//当前注册的服务
     @Published var txCharacteristic: CBCharacteristic!//发送特征
     @Published var rxCharacteristic: CBCharacteristic!//接受特征
     //@Published var currentPeripheralDelegate: BlueToothPeripheralDelegateManger//外设代理
@@ -85,7 +86,12 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         }
         //发现服务的特征
         for service in services {
-            peripheral.discoverCharacteristics(nil, for: service)//触发特征发现
+            print(service.uuid)
+            if service.uuid == CBUUID(string: "49535343-FE7D-4AE5-8FA9-9FAFD205E455"){
+                print("电源通用")
+                peripheral.discoverCharacteristics(nil, for: service)//触发特征发现
+            }
+            
         }
         print("发现服务: \(services)")
     }
@@ -98,6 +104,26 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         print("Found \(characteristics.count) characteristics.")
 
         for characteristic in characteristics {
+            if characteristic.uuid == CBUUID(string: "49535343-1E4D-4BD9-BA61-23C647249616"){
+                rxCharacteristic = characteristic
+            }
+            if characteristic.uuid == CBUUID(string: "49535343-8841-43F4-A8D4-ECBE34729BB3"){
+                currentPeripheral?.setNotifyValue(true, for: characteristic)
+                txCharacteristic = characteristic
+                
+                
+                var ticket = Ticket(
+                            .title("123"),
+                            .plainText("垃圾壹米滴答")
+                     
+                        )
+                        
+                        ticket.feedLinesOnHead = 2
+                        ticket.feedLinesOnTail = 3
+
+                
+                sendCommand(cmd: [Data([0xE7,0x88,0xB1,0xE4,0xBD,0xA0,0xE8,0x96,0x9B,0xE7,0x87,0x95])])
+            }
             print("特性id\(characteristic.uuid)")
             if characteristic.uuid.isEqual(CBUUIDs.BLE_Characteristic_uuid_Rx)  {
                 rxCharacteristic = characteristic
@@ -112,8 +138,34 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
                 txCharacteristic = characteristic
                 print("TX Characteristic: \(txCharacteristic.uuid)")
             }
+            if CBUUID(string: "0x2A19") == characteristic.uuid {
+                print("电池状态")
+                currentPeripheral?.setNotifyValue(true, for: characteristic)
+            }
         }
     }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        var value = characteristic.value!
+        print(value.base64EncodedString())
+        
+    }
+    
+    func sendCommand(cmd: [Data]){
+        //currentPeripheral?.writeValue(<#T##data: Data##Data#>, for: <#T##CBDescriptor#>)
+        //var payload = Data(cmd)
+        print("发送指令")
+        currentPeripheral?.writeValue(Data([0x1C,0x26]), for: txCharacteristic,type: .withResponse)
+        print(cmd)
+        for i in cmd {
+            currentPeripheral?.writeValue(i, for: txCharacteristic, type: .withResponse)
+        }
+    }
+    /**
+     49535343-FE7D-4AE5-8FA9-9FAFD205E455
+     Device Information
+     444E414C-4933-4543-AE2E-F30CB91BB70D
+     */
     func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
         switch event {
         case .peerDisconnected:

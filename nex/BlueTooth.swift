@@ -65,9 +65,8 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             return
         }
         Peripherals.append(peripheral)
-        print(peripheral.identifier)
-        print(peripheral.description)
-        print(peripheral.name as Any)
+        print(advertisementData)
+        print(RSSI)
     }
     //连接蓝牙之后调用
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral){
@@ -106,23 +105,17 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         for characteristic in characteristics {
             if characteristic.uuid == CBUUID(string: "49535343-1E4D-4BD9-BA61-23C647249616"){
                 rxCharacteristic = characteristic
+                currentPeripheral?.setNotifyValue(true, for: characteristic)
             }
             if characteristic.uuid == CBUUID(string: "49535343-8841-43F4-A8D4-ECBE34729BB3"){
                 currentPeripheral?.setNotifyValue(true, for: characteristic)
                 txCharacteristic = characteristic
                 
                 
-                var ticket = Ticket(
-                            .title("123"),
-                            .plainText("垃圾壹米滴答")
-                     
-                        )
-                        
-                        ticket.feedLinesOnHead = 2
-                        ticket.feedLinesOnTail = 3
-
-                
-                sendCommand(cmd: [Data([0xE7,0x88,0xB1,0xE4,0xBD,0xA0,0xE8,0x96,0x9B,0xE7,0x87,0x95])])
+                var data = Ticket(
+                    .Text("你个垃圾玩意儿123456",attr: )
+                )
+                sendCommand(cmd: data.getBytes())
             }
             print("特性id\(characteristic.uuid)")
             if characteristic.uuid.isEqual(CBUUIDs.BLE_Characteristic_uuid_Rx)  {
@@ -145,18 +138,28 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         }
     }
     
+    func peripheral(_ peripheral: CBPeripheral,
+    didUpdateNotificationStateFor characteristic: CBCharacteristic,
+                    error: Error?){
+        print("通知", characteristic.value)
+    }
+    
+    //接受外设通知
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        var value = characteristic.value!
-        print(value.base64EncodedString())
-        
+        var value = [UInt8](characteristic.value!)
+        print("value",value)
     }
     
     func sendCommand(cmd: [Data]){
+//        for i in cmd {
+//            print([UInt8](i))
+//        }
         //currentPeripheral?.writeValue(<#T##data: Data##Data#>, for: <#T##CBDescriptor#>)
         //var payload = Data(cmd)
-        print("发送指令")
-        currentPeripheral?.writeValue(Data([0x1C,0x26]), for: txCharacteristic,type: .withResponse)
-        print(cmd)
+        //var setGBK:[UInt8] = [27, 64,255, 254, 49, 0, 50, 0, 51, 0, 27, 74, 70]
+        //currentPeripheral?.writeValue(Data(setGBK), for: txCharacteristic,type: .withResponse)
+//        print(cmd)
+//        currentPeripheral?.writeValue(Data([0xc1,0xd6,0xd6,0xbe,0xec,0xc5]), for: txCharacteristic,type: .withResponse)
         for i in cmd {
             currentPeripheral?.writeValue(i, for: txCharacteristic, type: .withResponse)
         }

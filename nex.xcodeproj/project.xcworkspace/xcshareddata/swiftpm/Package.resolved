@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "printer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://hub.fastgit.xyz/KevinGong2013/Printer",
+      "state" : {
+        "branch" : "master",
+        "revision" : "91d2e1355d8767660acede91534e193c0a21fb2e"
+      }
+    }
+  ],
+  "version" : 2
+}

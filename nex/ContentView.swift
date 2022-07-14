@@ -12,7 +12,7 @@ import CoreBluetooth
 
 struct ContentView: View {
     @StateObject var BluetoothManger = BlueToothManger()
-    
+    @State var content = ""
     func changeConnect(ble: BlueToothManger, peripheral: CBPeripheral) -> Void {
         switch peripheral.state {
         case .connected:
@@ -24,14 +24,20 @@ struct ContentView: View {
         }
     }
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             List (BluetoothManger.Peripherals, id: \.identifier) {item in
                 CardView(peripheral: item, action: {changeConnect(ble: BluetoothManger, peripheral: item)})//连接action
                 //ListItemView(item: item, delegate: bleDevice)
             }
-            Button("search") {
-                BluetoothManger.centralManager?.scanForPeripherals(withServices: [])
+            TextField("打印文字",text:$content)
+                .padding()
+                .background()
+            Button("打印") {
+                BluetoothManger.printContent(content)
             }
+            .buttonStyle(.automatic)
+            .frame(width: 400, height: 100, alignment: .center)
+            .background(.background)
         }
     }
 }

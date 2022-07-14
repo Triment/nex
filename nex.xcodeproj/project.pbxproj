@@ -13,6 +13,8 @@
 		89058AD828504DB300CCB8BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89058AD728504DB300CCB8BC /* Assets.xcassets */; };
 		89058ADB28504DB300CCB8BC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89058ADA28504DB300CCB8BC /* Preview Assets.xcassets */; };
 		89058AE228504E6A00CCB8BC /* BlueTooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89058AE128504E6A00CCB8BC /* BlueTooth.swift */; };
+		89170268285B18590078A3D0 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89170267285B18590078A3D0 /* Layout.swift */; };
+		8917026A285B23980078A3D0 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89170269285B23980078A3D0 /* Type.swift */; };
 		8941978D285987F100B5FF5A /* ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941978C285987F100B5FF5A /* ticket.swift */; };
 		8941978F2859D5E700B5FF5A /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8941978E2859D5E700B5FF5A /* Text.swift */; };
 		896C81652853279500759B7D /* WlanManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896C81642853279500759B7D /* WlanManger.swift */; };
@@ -28,6 +30,8 @@
 		89058AD728504DB300CCB8BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		89058ADA28504DB300CCB8BC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		89058AE128504E6A00CCB8BC /* BlueTooth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueTooth.swift; sourceTree = "<group>"; };
+		89170267285B18590078A3D0 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		89170269285B23980078A3D0 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		8941978C285987F100B5FF5A /* ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ticket.swift; sourceTree = "<group>"; };
 		8941978E2859D5E700B5FF5A /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		896C81642853279500759B7D /* WlanManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WlanManger.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				8941978C285987F100B5FF5A /* ticket.swift */,
+				89170267285B18590078A3D0 /* Layout.swift */,
+				89170269285B23980078A3D0 /* Type.swift */,
 				8941978E2859D5E700B5FF5A /* Text.swift */,
 			);
 			path = Ticket;
@@ -203,8 +209,10 @@
 				89D532892851847700C40CF8 /* CardView.swift in Sources */,
 				8941978D285987F100B5FF5A /* ticket.swift in Sources */,
 				8941978F2859D5E700B5FF5A /* Text.swift in Sources */,
+				8917026A285B23980078A3D0 /* Type.swift in Sources */,
 				896C81652853279500759B7D /* WlanManger.swift in Sources */,
 				89B38EA62858887300E1838F /* Wrapper.swift in Sources */,
+				89170268285B18590078A3D0 /* Layout.swift in Sources */,
 				89058AD428504DB200CCB8BC /* nexApp.swift in Sources */,
 				89D287E72852E7F00094D591 /* PeripheralDelegate.swift in Sources */,
 			);

@@ -8,6 +8,9 @@
 import Foundation
 import CoreBluetooth
 import Printer
+import UIKit
+
+
 
 //蓝牙服务uuid
 
@@ -110,12 +113,6 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             if characteristic.uuid == CBUUID(string: "49535343-8841-43F4-A8D4-ECBE34729BB3"){
                 currentPeripheral?.setNotifyValue(true, for: characteristic)
                 txCharacteristic = characteristic
-                
-                
-                var data = Ticket(
-                    .Text("你个垃圾玩意儿123456",attr: )
-                )
-                sendCommand(cmd: data.getBytes())
             }
             print("特性id\(characteristic.uuid)")
             if characteristic.uuid.isEqual(CBUUIDs.BLE_Characteristic_uuid_Rx)  {
@@ -163,6 +160,19 @@ class BlueToothManger: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
         for i in cmd {
             currentPeripheral?.writeValue(i, for: txCharacteristic, type: .withResponse)
         }
+        currentPeripheral?.writeValue(Data([12]), for: txCharacteristic, type: .withResponse)
+    }
+    
+    func printContent(_ content: String) {
+        var tick = Ticket(
+            .title(content),
+            .blank(2),
+            .kv(k: "署名", v: "林帅")
+            
+        )
+        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(1586))
+        let gbk = String.Encoding(rawValue: encoding)
+        sendCommand(cmd: tick.data(using: gbk))
     }
     /**
      49535343-FE7D-4AE5-8FA9-9FAFD205E455
